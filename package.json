@@ -1,11 +1,10 @@
+// functions/package.json
 {
-  "name": "qr",
+  "name": "functions",
   "version": "1.0.0",
-  "description": "",
-  "main": "functions/server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
 }
