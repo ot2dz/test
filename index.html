@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        #trackingIdInput {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#qr {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#status {
+    color: #4caf50;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#date {
+    font-size: 0.8em;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+#name, #phone, #address, #product, #price, #delivery {
+    margin-bottom: 10px;
+}
+
+#product {
+    font-weight: bold;
+}
+
+#price {
+    color: #e44d26;
+    font-weight: bold;
+}
+
+#delivery {
+    background-color: #2196f3;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+@import url("https://kit.fontawesome.com/a076d05399.js");
+
+#result i {
+    cursor: pointer;
+}
+    </style>
+    <title>استخراج البيانات</title>
+</head>
+<body>
+    <h1>استخراج البيانات</h1>
+    <label for="trackingIdInput">رقم التتبع:</label>
+    <input type="text" id="trackingIdInput" placeholder="أدخل رقم التتبع">
+    <button onclick="extractData()">استخراج</button>
+    <div id="result">
+        <div id="qr"></div>
+        <i class="fas fa-copy"></i>
+        <div id="status"></div>
+        <div id="date"></div>
+        <div id="name"></div>
+        <div id="phone"></div>
+        <div id="address"></div>
+        <div id="product"></div>
+        <div id="price"></div>
+        <div id="delivery"></div>
+    </div>
+
+    <script>
+     
+    function extractData() {
+    const trackingId = document.getElementById("trackingIdInput").value;
+
+    fetch('/extractData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ trackingId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        const extractedData = data.extractedData;
+        document.getElementById("qr").innerHTML = extractedData[0].qr;
+        document.getElementById("status").innerHTML = extractedData[0].status;
+        document.getElementById("date").innerHTML = extractedData[0].date;
+        document.getElementById("name").innerHTML = extractedData[0].name;
+        document.getElementById("phone").innerHTML = extractedData[0].phone;
+        document.getElementById("address").innerHTML = extractedData[0].address;
+        document.getElementById("product").innerHTML = extractedData[0].product;
+        document.getElementById("price").innerHTML = extractedData[0].price;
+        document.getElementById("delivery").innerHTML = extractedData[0].delivery;
+
+        document.getElementById("qr").addEventListener("click", function() {
+            // نسخ النص إلى الحافظة
+            navigator.clipboard.writeText(this.innerHTML);
+        });
+    })
+    .catch(error => {
+        document.getElementById("result").innerHTML = `Error: ${error.message}`;
+        console.error("Error:", error);
+    });
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+[functions]
+directory = "functions"
+
+[[redirects]]
+from = "/extractData"
+to = "/.netlify/functions/server"
+status = 200
