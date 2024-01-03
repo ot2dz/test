@@ -1,8 +1,9 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const serverless = require("serverless-http");
 
 const app = express();
-const port = process.env.PORT || 3000; // Use the dynamic port provided by Netlify or default to 3000
+//const port = process.env.PORT || 3000; // Use the dynamic port provided by Netlify or default to 3000
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,6 +53,5 @@ app.post('/extractData', (req, res) => {
         });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+module.exports = app;
+module.exports.handler = serverless(app);
