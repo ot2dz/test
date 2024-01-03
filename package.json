@@ -1,1 +1,18 @@
+{
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "description": "Your project description",
+  "main": "functions/server.js",
+  "scripts": {
+    "start": "node functions/server.js",  // تأكد من تحديد اسم ملف الخادم الخاص بك إذا كان غير server.js
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+    // يمكنك إضافة أي تبعيات إضافية هنا
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
 
