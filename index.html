@@ -64,29 +64,46 @@
     padding: 20px;
     margin: 20px;
     border-radius: 8px;
-    text-align: center;
+    text-align: left; /* تحديد اليسار */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px; /* زيادة التباعد بين النصوص */
+    text-align: left;
+}
+
+th {
+    background-color: #4caf50;
+    color: white;
 }
 
 #qr {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 1em; /* تحسين حجم النص */
+    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
     cursor: pointer;
 }
 
 #status {
     color: #4caf50;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
 }
 
 #date {
-    font-size: 0.8em;
+    font-size: 0.9em; /* تحسين حجم النص */
     color: #777;
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
 }
 
 #name, #phone, #address, #product, #price, #delivery {
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
 }
 
 #product {
@@ -106,11 +123,12 @@
     font-weight: bold;
 }
 
-@import url("https://kit.fontawesome.com/a076d05399.js");
 
-#result i {
-    cursor: pointer;
-}
+        @import url("https://kit.fontawesome.com/a076d05399.js");
+
+        #result i {
+            cursor: pointer;
+        }
     </style>
     <title>استخراج البيانات</title>
 </head>
@@ -120,53 +138,72 @@
     <input type="text" id="trackingIdInput" placeholder="أدخل رقم التتبع">
     <button onclick="extractData()">استخراج</button>
     <div id="result">
-        <div id="qr"></div>
+        <table id="receiverTable">
+            <thead>
+                <tr>
+                    <th>رمز الاستجابة السريعة (QR)</th>
+                    <th>الحالة</th>
+                    <th>التاريخ</th>
+                    <th>الاسم</th>
+                    <th>الهاتف</th>
+                    <th>العنوان</th>
+                    <th>المنتج</th>
+                    <th>السعر</th>
+                    <th>التوصيل</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="qr"></td>
+                    <td id="status"></td>
+                    <td id="date"></td>
+                    <td id="name"></td>
+                    <td id="phone"></td>
+                    <td id="address"></td>
+                    <td id="product"></td>
+                    <td id="price"></td>
+                    <td id="delivery"></td>
+                </tr>
+            </tbody>
+        </table>
+
         <i class="fas fa-copy"></i>
-        <div id="status"></div>
-        <div id="date"></div>
-        <div id="name"></div>
-        <div id="phone"></div>
-        <div id="address"></div>
-        <div id="product"></div>
-        <div id="price"></div>
-        <div id="delivery"></div>
     </div>
 
     <script>
-     
-    function extractData() {
-    const trackingId = document.getElementById("trackingIdInput").value;
+        function extractData() {
+            const trackingId = document.getElementById("trackingIdInput").value;
 
-    fetch('/extractData', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ trackingId }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        const extractedData = data.extractedData;
-        document.getElementById("qr").innerHTML = extractedData[0].qr;
-        document.getElementById("status").innerHTML = extractedData[0].status;
-        document.getElementById("date").innerHTML = extractedData[0].date;
-        document.getElementById("name").innerHTML = extractedData[0].name;
-        document.getElementById("phone").innerHTML = extractedData[0].phone;
-        document.getElementById("address").innerHTML = extractedData[0].address;
-        document.getElementById("product").innerHTML = extractedData[0].product;
-        document.getElementById("price").innerHTML = extractedData[0].price;
-        document.getElementById("delivery").innerHTML = extractedData[0].delivery;
+            fetch('/extractData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ trackingId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const extractedData = data.extractedData;
+                document.getElementById("qr").innerHTML = extractedData[0].qr;
+                document.getElementById("status").innerHTML = extractedData[0].status;
+                document.getElementById("date").innerHTML = extractedData[0].date;
+                document.getElementById("name").innerHTML = extractedData[0].name;
+                document.getElementById("phone").innerHTML = extractedData[0].phone;
+                document.getElementById("address").innerHTML = extractedData[0].address;
+                document.getElementById("product").innerHTML = extractedData[0].product;
+                document.getElementById("price").innerHTML = extractedData[0].price;
+                document.getElementById("delivery").innerHTML = extractedData[0].delivery;
 
-        document.getElementById("qr").addEventListener("click", function() {
-            // نسخ النص إلى الحافظة
-            navigator.clipboard.writeText(this.innerHTML);
-        });
-    })
-    .catch(error => {
-        document.getElementById("result").innerHTML = `Error: ${error.message}`;
-        console.error("Error:", error);
-    });
-}
+                document.getElementById("qr").addEventListener("click", function() {
+                    // نسخ النص إلى الحافظة
+                    navigator.clipboard.writeText(this.innerHTML);
+                });
+            })
+            .catch(error => {
+                document.getElementById("result").innerHTML = `Error: ${error.message}`;
+                console.error("Error:", error);
+            });
+        }
     </script>
 </body>
 </html>
