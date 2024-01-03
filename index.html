@@ -59,72 +59,69 @@
         }
 
         #result {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 8px;
-    text-align: left; /* تحديد اليسار */
-}
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px; /* زيادة التباعد بين النصوص */
-    text-align: left;
-}
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
 
-th {
-    background-color: #4caf50;
-    color: white;
-}
+        th {
+            background-color: #4caf50;
+            color: white;
+        }
 
-#qr {
-    font-size: 1em; /* تحسين حجم النص */
-    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
-    cursor: pointer;
-}
+        #qr {
+            font-size: 1em;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
 
-#status {
-    color: #4caf50;
-    font-weight: bold;
-    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
-}
+        #status {
+            color: #4caf50;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
 
-#date {
-    font-size: 0.9em; /* تحسين حجم النص */
-    color: #777;
-    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
-}
+        #date {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 5px;
+        }
 
-#name, #phone, #address, #product, #price, #delivery {
-    margin-bottom: 5px; /* تقليل التباعد بين النصوص */
-}
+        #name, #phone, #address, #product, #price, #delivery {
+            margin-bottom: 5px;
+        }
 
-#product {
-    font-weight: bold;
-}
+        #product {
+            font-weight: bold;
+        }
 
-#price {
-    color: #e44d26;
-    font-weight: bold;
-}
+        #price {
+            color: #e44d26;
+            font-weight: bold;
+        }
 
-#delivery {
-    background-color: #2196f3;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-
-        @import url("https://kit.fontawesome.com/a076d05399.js");
+        #delivery {
+            background-color: #2196f3;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
 
         #result i {
             cursor: pointer;
@@ -137,37 +134,52 @@ th {
     <label for="trackingIdInput">رقم التتبع:</label>
     <input type="text" id="trackingIdInput" placeholder="أدخل رقم التتبع">
     <button onclick="extractData()">استخراج</button>
-    <div id="result">
-        <table id="receiverTable">
-            <thead>
-                <tr>
-                    <th>رمز الاستجابة السريعة (QR)</th>
-                    <th>الحالة</th>
-                    <th>التاريخ</th>
-                    <th>الاسم</th>
-                    <th>الهاتف</th>
-                    <th>العنوان</th>
-                    <th>المنتج</th>
-                    <th>السعر</th>
-                    <th>التوصيل</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="qr"></td>
-                    <td id="status"></td>
-                    <td id="date"></td>
-                    <td id="name"></td>
-                    <td id="phone"></td>
-                    <td id="address"></td>
-                    <td id="product"></td>
-                    <td id="price"></td>
-                    <td id="delivery"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="container">
+        <h2>معلومات الزبون</h2>
+        <div id="result">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>البيان</th>
+                        <td id="qr"></td>
+                    </tr>
+                    <tr>
+                        <th>الحالة</th>
+                        <td id="status"></td>
+                    </tr>
+                    <tr>
+                        <th>التاريخ</th>
+                        <td id="date"></td>
+                    </tr>
+                    <tr>
+                        <th>الاسم</th>
+                        <td id="name"></td>
+                    </tr>
+                    <tr>
+                        <th>الهاتف</th>
+                        <td id="phone"></td>
+                    </tr>
+                    <tr>
+                        <th>العنوان</th>
+                        <td id="address"></td>
+                    </tr>
+                    <tr>
+                        <th>المنتج</th>
+                        <td id="product"></td>
+                    </tr>
+                    <tr>
+                        <th>السعر</th>
+                        <td id="price"></td>
+                    </tr>
+                    <tr>
+                        <th>التوصيل</th>
+                        <td id="delivery"></td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <i class="fas fa-copy"></i>
+            <i class="fas fa-copy"></i>
+        </div>
     </div>
 
     <script>
@@ -195,7 +207,6 @@ th {
                 document.getElementById("delivery").innerHTML = extractedData[0].delivery;
 
                 document.getElementById("qr").addEventListener("click", function() {
-                    // نسخ النص إلى الحافظة
                     navigator.clipboard.writeText(this.innerHTML);
                 });
             })
