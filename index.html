@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
+                body {
             background-color: #f4f4f4;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -21,9 +21,11 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 80%; /* تعديل العرض ليكون أقل على أجهزة الكمبيوتر */
+            max-width: 600px; /* أقصى عرض للهواتف النقالة */
         }
 
-        h1 {
+        h1, h2 {
             color: #333;
         }
 
@@ -102,7 +104,7 @@
             margin-bottom: 5px;
         }
 
-        #name, #phone, #address, #product, #price, #delivery {
+        #name, #phone, #address, #product, #price, #delivery, #namestore, #phonestore, #addressstore {
             margin-bottom: 5px;
         }
 
@@ -135,8 +137,9 @@
     <input type="text" id="trackingIdInput" placeholder="أدخل رقم التتبع">
     <button onclick="extractData()">استخراج</button>
     <div class="container">
-        <h2>معلومات الزبون</h2>
+        <h2>معلومات الزبون</h2> 
         <div id="result">
+            
             <table>
                 <tbody>
                     <tr>
@@ -171,6 +174,25 @@
 
             <i class="fas fa-copy"></i>
         </div>
+        <h2>معلومات المرسل</h2> 
+        <div id="result">
+            
+            <table>
+                <tbody>
+                    <tr>
+                        <td id="namestore"></td>
+                    </tr>
+                    <tr>
+                        <td id="phonestore"></td>
+                    </tr>
+                    <tr>
+                        <td id="addressstore"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <i class="fas fa-copy"></i>
+        </div>
     </div>
 
     <script>
@@ -196,6 +218,9 @@
                 document.getElementById("product").innerHTML = extractedData[0].product;
                 document.getElementById("price").innerHTML = extractedData[0].price;
                 document.getElementById("delivery").innerHTML = extractedData[0].delivery;
+                document.getElementById("namestore").innerHTML = extractedData[0].namestore;
+                document.getElementById("phonestore").innerHTML = extractedData[0].phonestore;
+                document.getElementById("addressstore").innerHTML = extractedData[0].addressstore;
 
                 document.getElementById("qr").addEventListener("click", function() {
                     navigator.clipboard.writeText(this.innerHTML);
