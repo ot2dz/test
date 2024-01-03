@@ -44,6 +44,9 @@ app.post('/extractData', (req, res) => {
                 product : order.parcel.description,
                 price : order.cashCollection.totalPostTarget,
                 delivery : order.operation.deliveryType,
+                namestore: order.store.name,
+                phonestore: order.store.phoneNumberPrimary,
+                addressstore: order.store.address,
             }));
             res.json({ extractedData });
         })
