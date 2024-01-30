@@ -172,7 +172,7 @@ th, td {
         <div class="input-container"> <label for="trackingIdInput">رقم التتبع:</label>
          <input type="text" id="trackingIdInput" placeholder="أدخل رقم التتبع">
          <button onclick="extractData()">استخراج</button>
-         <button onclick="trackParcel()">تتبع الطرد</button>
+        
         </div>
         <h2>معلومات الزبون</h2> 
         <div id="result">
@@ -211,7 +211,7 @@ th, td {
             <i class="fas fa-copy"></i>
         </div>
       
-        <div id="trackingDetails"></div>
+    
     </div>
     
     <script>
@@ -237,9 +237,7 @@ th, td {
                 document.getElementById("product").innerHTML = extractedData[0].product;
                 document.getElementById("price").innerHTML = extractedData[0].price;
                 document.getElementById("delivery").innerHTML = extractedData[0].delivery;
-                document.getElementById("namestore").innerHTML = extractedData[0].namestore;
-                document.getElementById("phonestore").innerHTML = extractedData[0].phonestore;
-                document.getElementById("addressstore").innerHTML = extractedData[0].addressstore;
+        
 
                 document.getElementById("qr").addEventListener("click", function() {
                    navigator.clipboard.writeText(this.innerHTML);
@@ -258,26 +256,6 @@ th, td {
             window.scrollTo(0, 0);
         }
        
-        function trackParcel() {
-        const qr = document.getElementById("qr").textContent;
-        console.log(qr);
-        fetch(`/trackParcel/${qr}`, {
-        method: 'GET', // Change this to 'GET'
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            const parcelData = data.qrData;
-            console.log(parcelData);
-            document.getElementById("trackingDetails").innerHTML = parcelData[0].type;
-        })
-        .catch(error => {
-            // Handle errors
-            console.error("Error:", error);
-        });
-    }
        
     </script>
 </body>
