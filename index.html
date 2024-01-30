@@ -6,38 +6,46 @@
     
     <style>
         
-            body {
-            background-color: #f4f4f4;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .input-container {
-            position: sticky;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #fff;
-            padding: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-            box-sizing: border-box;
-        }
+        body {
+    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
 
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 80%; /* تعديل العرض ليكون أقل على أجهزة الكمبيوتر */
-            max-width: 600px; /* أقصى عرض للهواتف النقالة */
-            margin-top: 80px; /* تعديل المسافة بين ال input-container وال container */
-        }
+.input-container {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    margin-top: 80px;
+}
+
+/* تعديل للهواتف النقالة */
+@media screen and (max-width: 600px) {
+    .container {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
 
         h1, h2 {
             color: #333;
@@ -152,38 +160,38 @@
         <div class="input-container"> <label for="trackingIdInput">رقم التتبع:</label>
          <input type="text" id="trackingIdInput" placeholder="أدخل رقم التتبع">
          <button onclick="extractData()">استخراج</button>
+         <button onclick="trackParcel()">تتبع الطرد</button>
         </div>
         <h2>معلومات الزبون</h2> 
         <div id="result">
             
             <table>
+                <thead>
+                    <tr>
+                        <th>الرقم</th>
+                        <th>الحالة</th>
+                        <th>التاريخ</th>
+                        <th>الاسم</th>
+                        <th>رقم الهاتف</th>
+                        <th>العنوان</th>
+                        <th>المنتج</th>
+                        <th>السعر</th>
+                        <th>نوع التوصيل</th>
+                        <th>QR</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td id="qr"></td>
-                    </tr>
-                    <tr>
                         <td id="status"></td>
-                    </tr>
-                    <tr>
                         <td id="date"></td>
-                    </tr>
-                    <tr>
                         <td id="name"></td>
-                    </tr>
-                    <tr>
                         <td id="phone"></td>
-                    </tr>
-                    <tr>
                         <td id="address"></td>
-                    </tr>
-                    <tr>
                         <td id="product"></td>
-                    </tr>
-                    <tr>
                         <td id="price"></td>
-                    </tr>
-                    <tr>
                         <td id="delivery"></td>
+                        <td id="qrimg"></td>
                     </tr>
                 </tbody>
             </table>
@@ -209,8 +217,9 @@
 
             <i class="fas fa-copy"></i>
         </div>
+        <div id="trackingDetails"></div>
     </div>
-
+    
     <script>
         function extractData() {
             const trackingId = document.getElementById("trackingIdInput").value;
@@ -241,7 +250,12 @@
                 document.getElementById("qr").addEventListener("click", function() {
                    navigator.clipboard.writeText(this.innerHTML);
                 });
-              
+                const qrImage = document.createElement("img");
+                qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=${extractedData[0].qr}&size=100x100`;
+                    // إضافة عنصر الصورة QR إلى آخر الجدول
+                    const qrImgCell = document.getElementById("qrimg");
+                    qrImgCell.innerHTML = ""; // للتأكد من عدم وجود محتوى سابق في الخلية
+                    qrImgCell.appendChild(qrImage);
             })
             .catch(error => {
                 document.getElementById("result").innerHTML = `Error: ${error.message}`;
@@ -249,6 +263,28 @@
             });
             window.scrollTo(0, 0);
         }
+       
+        function trackParcel() {
+        const qr = document.getElementById("qr").textContent;
+        console.log(qr);
+        fetch(`/trackParcel/${qr}`, {
+        method: 'GET', // Change this to 'GET'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const parcelData = data.qrData;
+            console.log(parcelData);
+            document.getElementById("trackingDetails").innerHTML = parcelData[0].type;
+        })
+        .catch(error => {
+            // Handle errors
+            console.error("Error:", error);
+        });
+    }
+       
     </script>
 </body>
 </html>
