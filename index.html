@@ -188,7 +188,6 @@ th, td {
                         <th>المنتج</th>
                         <th>السعر</th>
                         <th>الحالة</th>
-                        <th>التاريخ</th>
                         <th>نوع التوصيل</th>
                         
                     </tr>
@@ -203,7 +202,6 @@ th, td {
                         <td id="product"></td>
                         <td id="price"></td>
                         <td id="status"></td>
-                        <td id="date"></td>
                         <td id="delivery"></td>
                         
                     </tr>
@@ -232,7 +230,6 @@ th, td {
                 const extractedData = data.extractedData;
                 document.getElementById("qr").innerHTML = extractedData[0].qr;
                 document.getElementById("status").innerHTML = extractedData[0].status;
-                document.getElementById("date").innerHTML = extractedData[0].date;
                 document.getElementById("name").innerHTML = extractedData[0].name;
                 document.getElementById("phone").innerHTML = extractedData[0].phone;
                 document.getElementById("address").innerHTML = extractedData[0].address;
