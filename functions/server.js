@@ -37,7 +37,6 @@ app.post('/extractData', (req, res) => {
             const extractedData = orders.map(order => ({
                 qr: order.id,
                 status: order.status,
-                date: order.createdAt,
                 name : order.target.fullName,
                 phone: order.target.phoneNumberPrimary,
                 address : order.target.address,
