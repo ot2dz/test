@@ -124,12 +124,20 @@ th, td {
             font-size: 1em;
             margin-bottom: 5px;
             cursor: pointer;
+            max-width: 100px; /* قيمة العرض القصوى التي تريدها للخانة */
+            overflow: hidden; /* يخفي أي محتوى يتجاوز الحجم المحدد */
+            text-overflow: ellipsis; /* يُظهر النقاط الثلاثة في نهاية النص إذا تجاوز الحجم المحدد */
+            white-space: nowrap; /* يمنع التفاف النص عند وصوله لحد الخلية */
         }
 
         #status {
             color: #4caf50;
             font-weight: bold;
             margin-bottom: 5px;
+            max-width: 100px; /* قيمة العرض القصوى التي تريدها للخانة */
+            overflow: hidden; /* يخفي أي محتوى يتجاوز الحجم المحدد */
+            text-overflow: ellipsis; /* يُظهر النقاط الثلاثة في نهاية النص إذا تجاوز الحجم المحدد */
+            white-space: nowrap; /* يمنع التفاف النص عند وصوله لحد الخلية */
         }
 
         #date {
@@ -195,7 +203,7 @@ th, td {
                 <tbody>
                     <tr>
                         <td id="qrimg"></td>
-                        <td id="qr"></td>
+                        <td id="qr" title="اضغط للنسخ"></td>
                         <td id="name"></td>
                         <td id="phone"></td>
                         <td id="address"></td>
