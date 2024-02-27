@@ -39,7 +39,7 @@ app.post('/extractData', (req, res) => {
                 status: order.status,
                 name : order.target.fullName,
                 phone: order.target.phoneNumberPrimary,
-                address : order.target.address,
+                address : order.target.municipality.name_latin,
                 product : order.parcel.description,
                 price : order.cashCollection.totalPostTarget,
                 delivery : order.operation.deliveryType,
