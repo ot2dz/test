@@ -41,7 +41,7 @@ app.post('/extractData', (req, res) => {
                 phone: order.target.phoneNumberPrimary,
                 address : order.target.municipality.name_latin,
                 product : order.parcel.description,
-                price : order.cashCollection.totalPostTarget,
+                price : order.payment.leftToPayFromTarget,
                 delivery : order.operation.deliveryType,
                 namestore: order.store.name,
                 phonestore: order.store.phoneNumberPrimary,
